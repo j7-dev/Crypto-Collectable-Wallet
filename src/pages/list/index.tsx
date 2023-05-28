@@ -43,7 +43,7 @@ const index = () => {
           {isBottom && enabled && (
             <>
               {new Array(10).fill(0).map((_, i) => (
-                <LoadingCard aspect="aspect-[263/407]" key={i} />
+                <LoadingCard key={i} />
               ))}
             </>
           )}
@@ -62,11 +62,13 @@ const index = () => {
     return (
       <SimpleGrid columns={2} spacing="2rem">
         {new Array(20).fill(0).map((_, i) => (
-          <LoadingCard aspect="aspect-[263/407]" key={i} />
+          <LoadingCard key={i} />
         ))}
       </SimpleGrid>
     );
   }
+
+  return null;
 };
 
 export default index;
