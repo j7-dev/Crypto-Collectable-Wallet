@@ -2,6 +2,7 @@ import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
 import { TAsset } from "@/types";
 import noimage from "@/assets/noimage.png";
 import { Link } from "react-router-dom";
+import { ImageTag } from "@/components";
 
 export const AssetCard: React.FC<{ asset: TAsset }> = ({ asset }) => {
   const imageUrl = asset?.image_url || noimage;
@@ -32,17 +33,7 @@ export const AssetCard: React.FC<{ asset: TAsset }> = ({ asset }) => {
             <Heading size="md">{name}</Heading>
             <Text noOfLines={2}>{description}</Text>
             {!!collectionName && (
-              <div className="flex bg-blue-400 items-center text-white text-xs px-3 py-1 rounded-xl w-fit">
-                {!!collectionImageUrl && (
-                  <Image
-                    className="h-4 w-4 mr-2"
-                    src={collectionImageUrl}
-                    alt={name}
-                    borderRadius="full"
-                  />
-                )}
-                {collectionName}
-              </div>
+              <ImageTag label={collectionName} imageUrl={collectionImageUrl} />
             )}
           </Stack>
         </CardBody>

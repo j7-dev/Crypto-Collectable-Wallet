@@ -3,7 +3,7 @@ import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { useReadMore, useOne } from "@/hooks";
 import noimage from "@/assets/noimage.png";
-import { LoadingPage } from "@/components";
+import { LoadingPage, ImageTag } from "@/components";
 
 const index = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,10 +16,13 @@ const index = () => {
     pathParams: [contractAddress, tokenId],
   });
   const asset = data?.data;
+  console.log("🚀 ~ file: index.tsx:19 ~ index ~ asset:", asset);
   const name = asset?.name || "";
   const permalink = asset?.permalink || "";
   const imgUrl = asset?.image_url || noimage;
   const description = asset?.description || "";
+  const collectionName = asset?.collection?.name || "";
+  const collectionImageUrl = asset?.collection?.image_url || "";
 
   const { renderText } = useReadMore({
     originText: description,
@@ -44,12 +47,13 @@ const index = () => {
         <Heading as="h1" size="xl">
           {name}
         </Heading>
-        <p className="text-xs text-gray-400">#{id}</p>
+        <p className="text-xs text-gray-400 mb-2">#{id}</p>
+        <ImageTag label={collectionName} imageUrl={collectionImageUrl} />
 
         <div className="mt-8 text-justify">{renderText()}</div>
       </div>
       {!!permalink && (
-        <div className="fixed bottom-0 bg-white py-4 w-full px-4">
+        <div className="fixed bottom-0 left-0 bg-white/50 py-4 w-full px-4">
           <a href={permalink} target="_blank">
             <Button colorScheme="blue" className="w-full">
               Permalink
