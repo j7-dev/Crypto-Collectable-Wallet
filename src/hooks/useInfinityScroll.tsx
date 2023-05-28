@@ -7,13 +7,11 @@ export function useInfinityScroll<T>({
   setEnabled,
   isLoading,
   list,
-  limit = 20,
 }: {
   setQueryParams: React.Dispatch<React.SetStateAction<TQuerryParams>>;
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
   list: T[];
-  limit?: number;
 }) {
   const [copyList, setCopyList] = useState<T[]>([]);
   const [isBottom, setIsBottom] = useState(false);
@@ -25,7 +23,7 @@ export function useInfinityScroll<T>({
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const distanceToBottom = documentHeight - (scrollTop + windowHeight);
       // start fetching when the distance to bottom is over threshold
-      const threshold = 0.5 * windowHeight;
+      const threshold = 0.5 * documentHeight;
 
       if (distanceToBottom <= threshold) {
         setQueryParams((pre) => {
