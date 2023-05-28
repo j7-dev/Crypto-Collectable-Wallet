@@ -1,10 +1,11 @@
+import React from "react";
 import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
 import { TAsset } from "@/types";
 import noimage from "@/assets/noimage.png";
 import { Link } from "react-router-dom";
 import { ImageTag } from "@/components";
 
-export const AssetCard: React.FC<{ asset: TAsset }> = ({ asset }) => {
+const Component: React.FC<{ asset: TAsset }> = ({ asset }) => {
   const imageUrl = asset?.image_url || noimage;
   const name = asset?.name || "No name";
   const description = asset?.description || "";
@@ -42,4 +43,4 @@ export const AssetCard: React.FC<{ asset: TAsset }> = ({ asset }) => {
   );
 };
 
-export default AssetCard;
+export const AssetCard = React.memo(Component);
