@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash-es";
 import { TQuerryParams } from "@/types";
 
@@ -16,8 +16,8 @@ export function useInfinityScroll<T>({
   const [copyList, setCopyList] = useState<T[]>([]);
   const [isBottom, setIsBottom] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = debounce(() => {
+  const handleScroll = useCallback(
+    debounce(() => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -39,8 +39,11 @@ export function useInfinityScroll<T>({
       } else {
         setIsBottom(false);
       }
-    }, 500);
+    }, 500),
+    []
+  );
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -54,7 +57,7 @@ export function useInfinityScroll<T>({
     if (!isLoading && list.length === 0) {
       setEnabled(false);
     }
-  }, [list.length, isLoading]);
+  }, [isLoading]);
 
   return {
     copyList,
