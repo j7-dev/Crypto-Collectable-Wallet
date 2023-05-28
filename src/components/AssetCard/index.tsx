@@ -10,8 +10,10 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
+import { TAssetCard } from "./types";
 
-const AssetCard = () => {
+export * from "./types";
+export const AssetCard: React.FC<{ asset: TAssetCard }> = ({ asset }) => {
   return (
     <Card maxW="xl">
       <CardBody>
