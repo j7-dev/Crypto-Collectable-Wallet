@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { AssetCard, EmptyPage, LoadingCard } from "@/components";
 import { useMany, useInfinityScroll } from "@/hooks";
@@ -13,19 +13,23 @@ const index = () => {
     limit: "20",
     offset: "0",
   });
-  const { data, isLoading } = useMany({
+  const result = useMany({
     resource: "asset",
     args: queryParams,
     queryOptions: {
       enabled,
     },
   });
-  const assets = data?.data?.assets || [];
+  const { data, isLoading } = result;
+
+  const assets = useMemo(() => {
+    return data?.data?.assets || [];
+  }, [isLoading]);
 
   const { copyList, isBottom } = useInfinityScroll<TAsset>({
     setQueryParams,
     setEnabled,
-    isLoading: isLoading,
+    isLoading,
     list: assets,
   });
 
