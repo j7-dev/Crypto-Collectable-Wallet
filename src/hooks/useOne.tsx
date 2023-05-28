@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useOne = (options: {
   resource: string;
-  id: number;
+  pathParams?: string[];
   args?: Record<string, string>;
   queryOptions?: {
     staleTime?: number;
@@ -18,15 +18,15 @@ export const useOne = (options: {
   };
 }) => {
   const queryKey = options?.args
-    ? [`get_${options.resource}`, options?.args]
-    : [`get_${options.resource}`];
+    ? [`get_${options.resource}`, options.pathParams || [], options?.args]
+    : [`get_${options.resource}`, options.pathParams || []];
 
   const getResult = useQuery(
     queryKey,
     async () =>
       getResource({
         resource: options.resource,
-        id: options.id,
+        pathParams: options.pathParams,
         args: options.args,
       }),
     options.queryOptions || {}

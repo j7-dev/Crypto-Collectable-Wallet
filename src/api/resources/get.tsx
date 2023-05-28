@@ -3,15 +3,17 @@ import { apiUrl } from "@/utils";
 
 export const getResource = async ({
   resource,
-  id,
+  pathParams = [],
   args = {},
 }: {
   resource: string;
-  id: number;
+  pathParams?: string[];
   args?: Record<string, string>;
 }) => {
   const getResult = await axios.get(
-    `${apiUrl}/${resource}/${id}/?${new URLSearchParams(args).toString()}`
+    `${apiUrl}/${resource}/${pathParams.join("/")}?${new URLSearchParams(
+      args
+    ).toString()}`
   );
 
   return getResult;
