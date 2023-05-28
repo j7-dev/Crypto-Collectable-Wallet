@@ -25,7 +25,7 @@ export const getResources = async ({
   args?: Record<string, string>;
 }) => {
   const getResult = await axios.get(
-    `${apiUrl}/${resource}/?${new URLSearchParams(args).toString()}`
+    `${apiUrl}/${resource}s/?${new URLSearchParams(args).toString()}`
   );
 
   return getResult;
