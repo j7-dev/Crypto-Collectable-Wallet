@@ -11,7 +11,6 @@ export const useReadMore = ({
   const [showReadMore, setShowReadMore] = useState<boolean | null>(null);
 
   useEffect(() => {
-    console.log("originText", limit);
     if (originText.length > limit) {
       const newText = `${originText.substring(0, 200)} ... `;
       setText(newText);

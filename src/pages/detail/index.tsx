@@ -16,7 +16,6 @@ const index = () => {
     pathParams: [contractAddress, tokenId],
   });
   const asset = data?.data;
-  console.log("🚀 ~ file: index.tsx:19 ~ index ~ asset:", asset);
   const name = asset?.name || "";
   const permalink = asset?.permalink || "";
   const imgUrl = asset?.image_url || noimage;
