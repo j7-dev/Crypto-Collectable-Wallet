@@ -1,28 +1,53 @@
+import { useState } from "react";
 import { SimpleGrid } from "@chakra-ui/react";
-import { AssetCard, TAssetCard } from "@/components";
-import { useMany } from "@/hooks";
+import { AssetCard } from "@/components";
+import { useMany, useInfinityScroll } from "@/hooks";
 import { owner } from "@/utils";
+import { TAsset, TQuerryParams } from "@/types";
 
 const index = () => {
-  const result = useMany({
+  const [enabled, setEnabled] = useState(true);
+  const [queryParams, setQueryParams] = useState<TQuerryParams>({
+    owner,
+    limit: "20",
+    offset: "0",
+  });
+  const { data, isLoading } = useMany({
     resource: "asset",
-    args: {
-      owner,
-      limit: "20",
-      offset: "0",
+    args: queryParams,
+    queryOptions: {
+      enabled,
     },
   });
-  const assets = result?.data?.data?.assets || [];
+  const assets = data?.data?.assets || [];
 
-  return (
-    <div className="">
-      <SimpleGrid columns={2} spacing="2rem">
-        {assets.map((asset: TAssetCard) => (
-          <AssetCard key={asset?.id} asset={asset} />
-        ))}
-      </SimpleGrid>
-    </div>
-  );
+  const { copyList, isBottom } = useInfinityScroll<TAsset>({
+    setQueryParams,
+    setEnabled,
+    isLoading: isLoading,
+    list: assets,
+    limit: 20,
+  });
+
+  if (copyList.length === 0 && !isLoading) {
+    return <>Empty</>;
+  }
+
+  if (copyList.length > 0) {
+    return (
+      <div className="">
+        <SimpleGrid columns={2} spacing="2rem">
+          {copyList.map((asset: TAsset) => (
+            <AssetCard key={asset?.id} asset={asset} />
+          ))}
+        </SimpleGrid>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return <>Loading</>;
+  }
 };
 
 export default index;
