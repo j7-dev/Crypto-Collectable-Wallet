@@ -1,53 +1,37 @@
-import {
-  Card,
-  CardBody,
-  Image,
-  Stack,
-  Heading,
-  Text,
-  Divider,
-  CardFooter,
-  ButtonGroup,
-  Button,
-} from "@chakra-ui/react";
+import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
 import { TAssetCard } from "./types";
 import noimage from "@/assets/noimage.png";
 
 export * from "./types";
 export const AssetCard: React.FC<{ asset: TAssetCard }> = ({ asset }) => {
-  const image_url = asset?.image_url || noimage;
+  const imageUrl = asset?.image_url || noimage;
+  const name = asset?.name || "No name";
+  const description = asset?.description || "";
+  const collectionName = asset?.collection?.name || "";
+  const collectionImageUrl = asset?.collection?.image_url || "";
 
   return (
     <Card maxW="xl">
       <CardBody>
-        <Image
-          src={image_url}
-          alt="Green double couch with wooden legs"
-          borderRadius="lg"
-        />
+        <Image src={imageUrl} alt={name} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-          <Heading size="md">Living room Sofa</Heading>
-          <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
-          </Text>
-          <Text color="blue.600" fontSize="2xl">
-            $450
-          </Text>
+          <Heading size="md">{name}</Heading>
+          <Text>{description}</Text>
+          {!!collectionName && (
+            <div className="flex bg-blue-400 items-center text-white text-xs px-3 py-1 rounded-xl w-fit">
+              {!!collectionImageUrl && (
+                <Image
+                  className="h-4 w-4 mr-2"
+                  src={collectionImageUrl}
+                  alt={name}
+                  borderRadius="full"
+                />
+              )}
+              {collectionName}
+            </div>
+          )}
         </Stack>
       </CardBody>
-      <Divider />
-      <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
-            Buy now
-          </Button>
-          <Button variant="ghost" colorScheme="blue">
-            Add to cart
-          </Button>
-        </ButtonGroup>
-      </CardFooter>
     </Card>
   );
 };
