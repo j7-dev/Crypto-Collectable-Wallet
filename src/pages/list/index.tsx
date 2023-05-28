@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { SimpleGrid } from "@chakra-ui/react";
-import { AssetCard } from "@/components";
+import { AssetCard, EmptyPage, LoadingCard } from "@/components";
 import { useMany, useInfinityScroll } from "@/hooks";
 import { owner } from "@/utils";
 import { TAsset, TQuerryParams } from "@/types";
+import { FaInbox } from "react-icons/fa";
 
 const index = () => {
   const [enabled, setEnabled] = useState(true);
@@ -26,27 +27,45 @@ const index = () => {
     setEnabled,
     isLoading: isLoading,
     list: assets,
-    limit: 20,
   });
 
   if (copyList.length === 0 && !isLoading) {
-    return <>Empty</>;
+    return <EmptyPage />;
   }
 
   if (copyList.length > 0) {
     return (
-      <div className="">
+      <>
         <SimpleGrid columns={2} spacing="2rem">
           {copyList.map((asset: TAsset) => (
             <AssetCard key={asset?.id} asset={asset} />
           ))}
+          {isBottom && enabled && (
+            <>
+              {new Array(10).fill(0).map((_, i) => (
+                <LoadingCard aspect="aspect-[263/407]" key={i} />
+              ))}
+            </>
+          )}
         </SimpleGrid>
-      </div>
+        {!enabled && (
+          <div className="flex justify-center items-center px-4 pt-6 pb-12 text-center text-2xl text-gray-400">
+            <FaInbox className="mr-4 text-[2rem]" />
+            <span>No More Data</span>
+          </div>
+        )}
+      </>
     );
   }
 
   if (isLoading) {
-    return <>Loading</>;
+    return (
+      <SimpleGrid columns={2} spacing="2rem">
+        {new Array(20).fill(0).map((_, i) => (
+          <LoadingCard aspect="aspect-[263/407]" key={i} />
+        ))}
+      </SimpleGrid>
+    );
   }
 };
 
