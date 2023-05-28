@@ -12,7 +12,7 @@ export const useReadMore = ({
 
   useEffect(() => {
     if (originText.length > limit) {
-      const newText = `${originText.substring(0, 200)} ... `;
+      const newText = `${originText.substring(0, limit)} ... `;
       setText(newText);
       setShowReadMore(true);
     } else {
@@ -27,7 +27,7 @@ export const useReadMore = ({
   };
 
   const handleLess = () => {
-    setText(originText.substring(0, 200) + " ...");
+    setText(originText.substring(0, limit) + " ...");
     setShowReadMore(true);
   };
 
