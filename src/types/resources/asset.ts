@@ -1,4 +1,4 @@
-export type TAssetCard = {
+export type TAsset = {
   id: number;
   token_id: string;
   num_sales: number;
@@ -78,7 +78,7 @@ export type TAssetCard = {
         [key: string]: any;
       };
       opensea_fees: {
-        "0x0000a26b00c1f0df003000390027140000faa719": number;
+        [key: string]: number;
       };
     };
     is_rarity_enabled: boolean;
@@ -105,4 +105,19 @@ export type TAssetCard = {
   rarity_data: string | null;
   transfer_fee: string | null;
   transfer_fee_payment_token: string | null;
+};
+
+export type TQuerryParams = {
+  owner?: string;
+  offset?: string;
+  limit?: string;
+  token_ids?: string;
+  collection?: string;
+  collection_slug?: string;
+  collection_editor?: string;
+  order_direction?: string;
+  asset_contract_address?: string;
+  asset_contract_addresses?: string;
+  cursor?: string;
+  include_orders?: string;
 };

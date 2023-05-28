@@ -1,11 +1,9 @@
 import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
-import { TAssetCard } from "./types";
+import { TAsset } from "@/types";
 import noimage from "@/assets/noimage.png";
 import { Link } from "react-router-dom";
 
-export * from "./types";
-
-export const AssetCard: React.FC<{ asset: TAssetCard }> = ({ asset }) => {
+export const AssetCard: React.FC<{ asset: TAsset }> = ({ asset }) => {
   const imageUrl = asset?.image_url || noimage;
   const name = asset?.name || "No name";
   const description = asset?.description || "";
