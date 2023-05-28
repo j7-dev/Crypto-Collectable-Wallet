@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
+import { List, Detail } from "@/pages";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <List />,
   },
   {
     path: "/detail/:id",
-    element: <div>detail :id</div>,
+    element: <Detail />,
   },
 ]);
