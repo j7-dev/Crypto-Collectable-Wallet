@@ -3,6 +3,7 @@ import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { useReadMore, useOne } from "@/hooks";
 import noimage from "@/assets/noimage.png";
+import { LoadingPage } from "@/components";
 
 const index = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,21 +11,23 @@ const index = () => {
   const tokenId: string = state?.tokenId;
   const contractAddress: string = state?.contractAddress;
 
-  const result = useOne({
+  const { data, isLoading } = useOne({
     resource: "asset",
     pathParams: [contractAddress, tokenId],
   });
-  const asset = result?.data?.data;
+  const asset = data?.data;
   const name = asset?.name || "";
   const permalink = asset?.permalink || "";
   const imgUrl = asset?.image_url || noimage;
-  console.log("🚀 ~ file: index.tsx:8 ~ index ~ result:", asset);
+  const description = asset?.description || "";
 
   const { renderText } = useReadMore({
-    originText:
-      "Excepteur ex sunt dolore Lorem id ad sit qui excepteur id aliqua. Est pariatur duis sit ad elit id ipsum. Culpa in amet consequat labore nostrud laborum voluptate nisi. Enim sit aliquip officia esse exercitation officia esse aliquip. Eiusmod ad Lorem consectetur sunt dolor eiusmod aliquip incididunt.Non officia eu enim consequat. Exercitation voluptate consequat aliquip consectetur culpa sunt anim amet ea incididunt. Elit ipsum dolor sit fugiat labore.Tempor dolore aliquip adipisicing labore mollit laborum dolore dolore pariatur nisi enim nisi mollit. Reprehenderit incididunt velit labore sunt ea labore adipisicing do nostrud non quis eu. Reprehenderit culpa exercitation veniam sit excepteur officia mollit dolor ea. Qui ex dolore nostrud magna est aliquip adipisicing incididunt veniam tempor. Minim fugiat minim aliqua pariatur excepteur aute et veniam velit pariatur do ipsum. Aliquip labore id aliquip sit cillum labore aute consectetur. Minim et nulla consectetur consectetur aute pariatur proident amet irure.Cupidatat fugiat cillum officia esse exercitation voluptate est elit qui sint velit. Occaecat qui fugiat excepteur commodo in in quis consectetur eu. Velit eiusmod aliqua consequat ea.",
+    originText: description,
   });
-  return (
+
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
     <div className="-mx-4 xl:-mx-8 pb-16">
       <div className="flex justify-center items-center relative h-8 mb-4">
         <Link to="/" className="absolute left-4">
