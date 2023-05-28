@@ -1,7 +1,6 @@
 import React from "react";
-import { IoIosCloseCircle } from "react-icons/io";
 import { Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Component = () => {
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const Component = () => {
   };
   return (
     <div className="h-[calc(100vh-4rem)] w-full flex flex-col justify-center items-center">
-      <IoIosCloseCircle className="text-[10rem] text-red-400" />
+      <p className="font-black text-[10rem] text-red-400">404</p>
       <p className="text-xl  text-gray-400 mb-2">
         OOPS! Seems you get an Error
       </p>
@@ -25,7 +24,14 @@ const Component = () => {
         </a>
       </p>
 
-      <Button onClick={handleReload}>Try Again</Button>
+      <div className="flex">
+        <Button onClick={handleReload} className="mr-4">
+          Try Again
+        </Button>
+        <Link to="/">
+          <Button colorScheme="blue">Go HomePage</Button>
+        </Link>
+      </div>
     </div>
   );
 };
