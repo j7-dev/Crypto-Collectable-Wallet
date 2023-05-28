@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash-es";
 import { TQuerryParams } from "@/types";
+import { isEqual } from "lodash-es";
 
 export function useInfinityScroll<T>({
   setQueryParams,
@@ -29,12 +30,17 @@ export function useInfinityScroll<T>({
         setQueryParams((pre) => {
           const offset = parseInt(pre?.offset || "0", 10);
           const limit = parseInt(pre?.limit || "0", 10);
-
-          return {
+          const newQueryParams = {
             ...pre,
             offset: (offset + 1 * limit).toString(),
           };
+          if (!isEqual(pre, newQueryParams)) {
+            return newQueryParams;
+          } else {
+            return pre;
+          }
         });
+
         setIsBottom(true);
       } else {
         setIsBottom(false);
@@ -52,7 +58,12 @@ export function useInfinityScroll<T>({
 
   useEffect(() => {
     if (!isLoading && list.length > 0) {
-      setCopyList((pre) => [...pre, ...list]);
+      setCopyList((pre) => {
+        if (!isEqual(pre, list)) {
+          return [...pre, ...list];
+        }
+        return pre;
+      });
     }
     if (!isLoading && list.length === 0) {
       setEnabled(false);
