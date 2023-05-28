@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "@chakra-ui/react";
 
-export const ImageTag: React.FC<{
+const Component: React.FC<{
   label: string;
   imageUrl?: string;
 }> = ({ label, imageUrl = "" }) => {
@@ -19,3 +19,5 @@ export const ImageTag: React.FC<{
     </div>
   );
 };
+
+export const ImageTag = React.memo(Component);
