@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": "off",
     "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
     "no-console": ["warn"],
     "no-unused-vars": [
       "warn",
