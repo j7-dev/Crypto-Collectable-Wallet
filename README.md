@@ -24,7 +24,6 @@ Tech stacks
 5. [React Query v5](https://tanstack.com/query/v5)
 6. [React Router v6](https://reactrouter.com/en/main)
 7. [Chakra UI](https://chakra-ui.com/)
- JWT if a wordpress user is logged in
 
 ## Install
 
@@ -208,4 +207,4 @@ UseQueryResult<AxiosResponse<any, any>, unknown>;
 ```
 
 
-## Thank you for your time
+## Thank you for your time 🎉
